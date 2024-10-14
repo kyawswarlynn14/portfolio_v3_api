@@ -19,6 +19,9 @@ type AboutMe struct {
 	LinkedIn    string `json:"linkedIn" bson:"linkedIn"`
 	Facebook    string `json:"facebook" bson:"facebook"`
 	Telegram    string `json:"telegram" bson:"telegram"`
+	Image       string `json:"image" bson:"image"`
+	T1          string `json:"t1" bson:"t1"`
+	T2          string `json:"t2" bson:"t2"`
 }
 
 type ServiceInfo struct {
