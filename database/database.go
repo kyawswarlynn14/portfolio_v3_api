@@ -63,3 +63,15 @@ func CertificateData(client *mongo.Client, CollectionName string) *mongo.Collect
 func EmailData(client *mongo.Client, CollectionName string) *mongo.Collection {
 	return client.Database("Portfolio").Collection(CollectionName)
 }
+
+func UserData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	return client.Database("Portfolio").Collection(CollectionName)
+}
+
+func ExpenseCategoryData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	return client.Database("Portfolio").Collection(CollectionName)
+}
+
+func ExpenseItemData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	return client.Database("Portfolio").Collection(CollectionName)
+}

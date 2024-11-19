@@ -41,12 +41,20 @@ func main() {
 	authenticatedRoutes := router.Group("/portfolio/")
 	authenticatedRoutes.Use(middleware.Authentication())
 
+	expenseRoutes := router.Group("/portfolio/expense")
+	expenseRoutes.Use(middleware.Authentication())
+
 	routes.AuthRoutes(publicRoutes, authenticatedRoutes)
 	routes.LayoutRoutes(publicRoutes, authenticatedRoutes)
 	routes.CertificateRoutes(publicRoutes, authenticatedRoutes)
 	routes.ServiceRoutes(publicRoutes, authenticatedRoutes)
 	routes.ProjectRoutes(publicRoutes, authenticatedRoutes)
 	routes.EmailRoutes(publicRoutes, authenticatedRoutes)
+
+	// Expense App
+	routes.UserRoutes(publicRoutes, expenseRoutes)
+	routes.ExpenseCategoryRoutes(expenseRoutes)
+	routes.ExpenseItemRoutes(expenseRoutes)
 
 	log.Fatal(router.Run(":" + port))
 }

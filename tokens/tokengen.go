@@ -8,15 +8,19 @@ import (
 )
 
 type SignedDetails struct {
-	Email string
+	Email   string
+	User_ID string
+	Role    int
 	jwt.StandardClaims
 }
 
 var SECRET_KEY = os.Getenv("SECRET_KEY")
 
-func TokenGenerator(email string) (signedtoken string, err error) {
+func TokenGenerator(email string, userId string, role int) (signedtoken string, err error) {
 	claims := &SignedDetails{
-		Email: email,
+		Email:   email,
+		User_ID: userId,
+		Role:    role,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
 		},

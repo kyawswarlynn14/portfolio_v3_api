@@ -2,6 +2,7 @@ package routes
 
 import (
 	"portfolio/controllers"
+	"portfolio/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -50,4 +51,35 @@ func EmailRoutes(publicRoutes, authenticatedRoutes *gin.RouterGroup) {
 	authenticatedRoutes.GET("/email/get-all", controllers.GetAllEmails())
 	authenticatedRoutes.GET("/email/get-one/:id", controllers.GetOneEmail())
 	authenticatedRoutes.DELETE("/email/delete/:id", controllers.DeleteEmail())
+}
+
+// Expense App
+func UserRoutes(publicRoutes, expenseRoutes *gin.RouterGroup) {
+	publicRoutes.POST("/expense/register", controllers.RegisterUser())
+	publicRoutes.POST("/expense/login", controllers.LoginUser())
+
+	expenseRoutes.GET("/me", controllers.GetCurrentUser())
+	expenseRoutes.PUT("/update-user-info", controllers.UpdateUserInfo())
+	expenseRoutes.PUT("/update-user-password", controllers.UpdateUserPassword())
+
+	var expenseAdminRoutes gin.IRoutes = expenseRoutes.Use(middleware.Authorization([]int{1, 2}))
+	expenseAdminRoutes.GET("/get-all-users", controllers.GetAllUsers())
+	expenseAdminRoutes.PUT("/update-user-role", controllers.UpdateUserRole())
+	expenseAdminRoutes.DELETE("/delete-user/:id", controllers.DeleteUser())
+}
+
+func ExpenseCategoryRoutes(expenseRoutes *gin.RouterGroup) {
+	expenseRoutes.POST("/create-category", controllers.CreateExpenseCategory())
+	expenseRoutes.PUT("/update-category/:id", controllers.UpdateExpenseCategory())
+	expenseRoutes.DELETE("/delete-category/:id", controllers.DeleteExpenseCategory())
+	expenseRoutes.GET("/get-all-categories", controllers.GetAllExpenseCategories())
+	expenseRoutes.GET("/get-one-category/:id", controllers.GetOneExpenseCategory())
+}
+
+func ExpenseItemRoutes(expenseRoutes *gin.RouterGroup) {
+	expenseRoutes.POST("/create-item", controllers.CreateExpenseItem())
+	expenseRoutes.PUT("/update-item/:id", controllers.UpdateExpenseItem())
+	expenseRoutes.DELETE("/delete-item/:id", controllers.DeleteExpenseItem())
+	expenseRoutes.GET("/get-all-incomes", controllers.GetAllIncomes())
+	expenseRoutes.GET("/get-all-outcomes", controllers.GetAllOutcomes())
 }

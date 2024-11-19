@@ -37,6 +37,42 @@ func Authentication() gin.HandlerFunc {
 
 		// Set user information (e.g., email) in the request context
 		c.Set("email", claims.Email)
+		c.Set("userId", claims.User_ID)
+		c.Set("role", claims.Role)
+		c.Next()
+	}
+}
+
+func Authorization(roles []int) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userRoleFromMdw, exists := c.Get("role")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"success": false, "error": "Role not found in request context"})
+			c.Abort()
+			return
+		}
+
+		userRole, ok := userRoleFromMdw.(int)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Invalid role format"})
+			c.Abort()
+			return
+		}
+
+		isAuthorized := false
+		for _, role := range roles {
+			if userRole == role {
+				isAuthorized = true
+				break
+			}
+		}
+
+		if !isAuthorized {
+			c.JSON(http.StatusForbidden, gin.H{"success": false, "error": "Access denied"})
+			c.Abort()
+			return
+		}
+
 		c.Next()
 	}
 }

@@ -21,7 +21,7 @@ func Login() gin.HandlerFunc {
 		}
 
 		if loginDetails.Email == EMAIL && loginDetails.Password == PASSWORD {
-			token, err := generate.TokenGenerator(loginDetails.Email)
+			token, err := generate.TokenGenerator(loginDetails.Email, "", 0)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Failed to generate token"})
 				return
