@@ -28,8 +28,11 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
+			"http://localhost:5173",
 			"https://kyawswarlynn.vercel.app",
 			"https://kyawswarlynn.netlify.app",
+			"https://nano-expense.vercel.app",
+			"https://mainano.vercel.app",
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
