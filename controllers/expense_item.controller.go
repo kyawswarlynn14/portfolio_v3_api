@@ -42,7 +42,6 @@ func CreateExpenseItem() gin.HandlerFunc {
 
 		expenseItem.Item_ID = primitive.NewObjectID()
 		expenseItem.User_ID = userIDStr
-		expenseItem.Created_At = time.Now()
 		expenseItem.Updated_At = time.Now()
 
 		_, err := ExpenseItemCollection.InsertOne(ctx, expenseItem)
@@ -109,6 +108,9 @@ func UpdateExpenseItem() gin.HandlerFunc {
 		}
 		if expenseItem.T2 != "" {
 			updateFields["t2"] = expenseItem.T2
+		}
+		if expenseItem.Created_At.String() != "" {
+			updateFields["created_at"] = expenseItem.Created_At
 		}
 
 		result, err := ExpenseItemCollection.UpdateOne(ctx, bson.M{"_id": objID}, bson.M{"$set": updateFields})
