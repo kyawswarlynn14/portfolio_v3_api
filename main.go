@@ -47,6 +47,9 @@ func main() {
 	expenseRoutes := router.Group("/portfolio/expense")
 	expenseRoutes.Use(middleware.Authentication())
 
+	expenseAdminRoutes := router.Group("/portfolio/expense")
+	expenseAdminRoutes.Use(middleware.Authentication()).Use(middleware.Authorization([]int{1, 2}))
+
 	routes.AuthRoutes(publicRoutes, authenticatedRoutes)
 	routes.LayoutRoutes(publicRoutes, authenticatedRoutes)
 	routes.CertificateRoutes(publicRoutes, authenticatedRoutes)
@@ -55,7 +58,7 @@ func main() {
 	routes.EmailRoutes(publicRoutes, authenticatedRoutes)
 
 	// Expense App
-	routes.UserRoutes(publicRoutes, expenseRoutes)
+	routes.UserRoutes(publicRoutes, expenseRoutes, expenseAdminRoutes)
 	routes.ExpenseCategoryRoutes(expenseRoutes)
 	routes.ExpenseItemRoutes(expenseRoutes)
 

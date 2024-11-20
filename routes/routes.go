@@ -2,7 +2,6 @@ package routes
 
 import (
 	"portfolio/controllers"
-	"portfolio/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,7 +53,7 @@ func EmailRoutes(publicRoutes, authenticatedRoutes *gin.RouterGroup) {
 }
 
 // Expense App
-func UserRoutes(publicRoutes, expenseRoutes *gin.RouterGroup) {
+func UserRoutes(publicRoutes, expenseRoutes *gin.RouterGroup, expenseAdminRoutes *gin.RouterGroup) {
 	publicRoutes.POST("/expense/register", controllers.RegisterUser())
 	publicRoutes.POST("/expense/login", controllers.LoginUser())
 
@@ -62,7 +61,6 @@ func UserRoutes(publicRoutes, expenseRoutes *gin.RouterGroup) {
 	expenseRoutes.PUT("/update-user-info", controllers.UpdateUserInfo())
 	expenseRoutes.PUT("/update-user-password", controllers.UpdateUserPassword())
 
-	var expenseAdminRoutes gin.IRoutes = expenseRoutes.Use(middleware.Authorization([]int{1, 2}))
 	expenseAdminRoutes.GET("/get-all-users", controllers.GetAllUsers())
 	expenseAdminRoutes.PUT("/update-user-role", controllers.UpdateUserRole())
 	expenseAdminRoutes.DELETE("/delete-user/:id", controllers.DeleteUser())
