@@ -198,7 +198,7 @@ func GetAllExpenseCategories() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"success": true, "expenseCategories": expenseCategories})
+		c.JSON(http.StatusOK, gin.H{"success": true, "categories": expenseCategories})
 	}
 }
 
@@ -234,6 +234,6 @@ func GetOneExpenseCategory() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"success": true, "expenseCategory": expenseCategory})
+		c.JSON(http.StatusOK, gin.H{"success": true, "category": expenseCategory})
 	}
 }

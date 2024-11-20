@@ -187,20 +187,37 @@ func GetAllIncomes() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
 
-		var incomes []models.ExpenseItem
-		cursor, err := ExpenseItemCollection.Find(ctx, bson.M{
-			"user_id": userIDStr,
-			"type":    "001",
-			"created_at": bson.M{
-				"$gte": startDate,
-				"$lte": endDate,
-			},
-		})
+		pipeline := mongo.Pipeline{
+			{{Key: "$match", Value: bson.M{
+				"user_id":    userIDStr,
+				"type":       "001",
+				"created_at": bson.M{"$gte": startDate, "$lte": endDate},
+			}}},
+			{{Key: "$addFields", Value: bson.M{
+				"category_id_object": bson.M{"$toObjectId": "$category_id"},
+			}}},
+			{{Key: "$lookup", Value: bson.M{
+				"from":         "ExpenseCategories",
+				"localField":   "category_id_object",
+				"foreignField": "_id",
+				"as":           "category",
+			}}},
+			{{Key: "$unwind", Value: bson.M{
+				"path":                       "$category",
+				"preserveNullAndEmptyArrays": true,
+			}}},
+			{{Key: "$project", Value: bson.M{
+				"category_id_object": 0,
+			}}},
+		}
+
+		cursor, err := ExpenseItemCollection.Aggregate(ctx, pipeline)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Error retrieving incomes"})
 			return
 		}
 
+		var incomes []bson.M
 		if err = cursor.All(ctx, &incomes); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Error decoding incomes"})
 			return
@@ -242,20 +259,37 @@ func GetAllOutcomes() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
 
-		var outcomes []models.ExpenseItem
-		cursor, err := ExpenseItemCollection.Find(ctx, bson.M{
-			"user_id": userIDStr,
-			"type":    "002",
-			"created_at": bson.M{
-				"$gte": startDate,
-				"$lte": endDate,
-			},
-		})
+		pipeline := mongo.Pipeline{
+			{{Key: "$match", Value: bson.M{
+				"user_id":    userIDStr,
+				"type":       "002",
+				"created_at": bson.M{"$gte": startDate, "$lte": endDate},
+			}}},
+			{{Key: "$addFields", Value: bson.M{
+				"category_id_object": bson.M{"$toObjectId": "$category_id"},
+			}}},
+			{{Key: "$lookup", Value: bson.M{
+				"from":         "ExpenseCategories",
+				"localField":   "category_id_object",
+				"foreignField": "_id",
+				"as":           "category",
+			}}},
+			{{Key: "$unwind", Value: bson.M{
+				"path":                       "$category",
+				"preserveNullAndEmptyArrays": true,
+			}}},
+			{{Key: "$project", Value: bson.M{
+				"category_id_object": 0,
+			}}},
+		}
+
+		cursor, err := ExpenseItemCollection.Aggregate(ctx, pipeline)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Error retrieving outcomes"})
 			return
 		}
 
+		var outcomes []bson.M
 		if err = cursor.All(ctx, &outcomes); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Error decoding outcomes"})
 			return
