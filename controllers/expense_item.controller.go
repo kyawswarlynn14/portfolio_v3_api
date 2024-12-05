@@ -97,6 +97,9 @@ func UpdateExpenseItem() gin.HandlerFunc {
 		if expenseItem.Title != "" {
 			updateFields["title"] = expenseItem.Title
 		}
+		if expenseItem.Category_ID != "" {
+			updateFields["category_id"] = expenseItem.Category_ID
+		}
 		if expenseItem.Remark != "" {
 			updateFields["remark"] = expenseItem.Remark
 		}

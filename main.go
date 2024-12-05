@@ -33,6 +33,7 @@ func main() {
 			"https://kyawswarlynn.netlify.app",
 			"https://nano-expense.vercel.app",
 			"https://mainano.vercel.app",
+			"https://nano-expenzo.vercel.app/",
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
