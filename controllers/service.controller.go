@@ -15,13 +15,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var ServiceCollection *mongo.Collection = database.ServiceData(database.Client, "Services")
+var ServiceCollection *mongo.Collection = database.PortfolioData(database.Client, "Services")
 
 func CreateService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
-		
+
 		var service models.Service
 		if err := c.BindJSON(&service); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"success": false, "error": err.Error()})
@@ -64,12 +64,12 @@ func UpdateService() gin.HandlerFunc {
 
 		update := bson.M{
 			"$set": bson.M{
-				"title":       service.Title,
-				"content": service.Content,
-				"image":       service.Image,
-				"t1":          service.T1,
-				"t2":          service.T2,
-				"updated_at":  service.Updated_At,
+				"title":      service.Title,
+				"content":    service.Content,
+				"image":      service.Image,
+				"t1":         service.T1,
+				"t2":         service.T2,
+				"updated_at": service.Updated_At,
 			},
 		}
 

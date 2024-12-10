@@ -18,7 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var UserCollection *mongo.Collection = database.UserData(database.Client, "Users")
+var UserCollection *mongo.Collection = database.PortfolioData(database.Client, "Users")
 
 func RegisterUser() gin.HandlerFunc {
 	return func(c *gin.Context) {

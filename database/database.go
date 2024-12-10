@@ -44,34 +44,6 @@ func DBSet() *mongo.Client {
 
 var Client *mongo.Client = DBSet()
 
-func LayoutData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func ServiceData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func ProjectData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func CertificateData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func EmailData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func UserData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func ExpenseCategoryData(client *mongo.Client, CollectionName string) *mongo.Collection {
-	return client.Database("Portfolio").Collection(CollectionName)
-}
-
-func ExpenseItemData(client *mongo.Client, CollectionName string) *mongo.Collection {
+func PortfolioData(client *mongo.Client, CollectionName string) *mongo.Collection {
 	return client.Database("Portfolio").Collection(CollectionName)
 }

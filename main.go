@@ -33,7 +33,7 @@ func main() {
 			"https://kyawswarlynn.netlify.app",
 			"https://nano-expense.vercel.app",
 			"https://mainano.vercel.app",
-			"https://nano-expenzo.vercel.app/",
+			"https://nano-expenzo.vercel.app",
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
@@ -51,6 +51,7 @@ func main() {
 	expenseAdminRoutes := router.Group("/portfolio/expense")
 	expenseAdminRoutes.Use(middleware.Authentication()).Use(middleware.Authorization([]int{1, 2}))
 
+	routes.VisitorRoutes(publicRoutes, authenticatedRoutes)
 	routes.AuthRoutes(publicRoutes, authenticatedRoutes)
 	routes.LayoutRoutes(publicRoutes, authenticatedRoutes)
 	routes.CertificateRoutes(publicRoutes, authenticatedRoutes)

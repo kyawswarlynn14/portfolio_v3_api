@@ -15,7 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var CertificateCollection *mongo.Collection = database.CertificateData(database.Client, "Certificates")
+var CertificateCollection *mongo.Collection = database.PortfolioData(database.Client, "Certificates")
 
 func CreateCertificate() gin.HandlerFunc {
 	return func(c *gin.Context) {

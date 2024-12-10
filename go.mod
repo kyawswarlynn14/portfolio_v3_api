@@ -6,6 +6,7 @@ require go.mongodb.org/mongo-driver v1.15.0
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
+	github.com/avct/uasurfer v0.0.0-20240501094946-ca0c4d1e541b // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect

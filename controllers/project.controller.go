@@ -15,7 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var ProjectCollection *mongo.Collection = database.ProjectData(database.Client, "Projects")
+var ProjectCollection *mongo.Collection = database.PortfolioData(database.Client, "Projects")
 
 func CreateProject() gin.HandlerFunc {
 	return func(c *gin.Context) {

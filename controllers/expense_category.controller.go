@@ -15,7 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var ExpenseCategoryCollection *mongo.Collection = database.ExpenseCategoryData(database.Client, "ExpenseCategories")
+var ExpenseCategoryCollection *mongo.Collection = database.PortfolioData(database.Client, "ExpenseCategories")
 
 func CreateExpenseCategory() gin.HandlerFunc {
 	return func(c *gin.Context) {

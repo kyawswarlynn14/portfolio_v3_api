@@ -14,7 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var LayoutCollection *mongo.Collection = database.LayoutData(database.Client, "Layouts")
+var LayoutCollection *mongo.Collection = database.PortfolioData(database.Client, "Layouts")
 
 func ManageLayout() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -153,9 +153,9 @@ func getLayout(ctx context.Context, c *gin.Context, layoutType string) {
 	case "service_info":
 		var serviceInfo models.ServiceInfo
 		err := LayoutCollection.FindOne(ctx, bson.M{"type": layoutType}).Decode(&struct {
-			ID   primitive.ObjectID   `json:"_id" bson:"_id"`
-			Type string               `json:"type" bson:"type"`
-			Data *models.ServiceInfo  `json:"data" bson:"data"`
+			ID   primitive.ObjectID  `json:"_id" bson:"_id"`
+			Type string              `json:"type" bson:"type"`
+			Data *models.ServiceInfo `json:"data" bson:"data"`
 		}{
 			ID:   layoutData.ID,
 			Type: layoutData.Type,
@@ -169,9 +169,9 @@ func getLayout(ctx context.Context, c *gin.Context, layoutType string) {
 	case "project_info":
 		var projectInfo models.ProjectInfo
 		err := LayoutCollection.FindOne(ctx, bson.M{"type": layoutType}).Decode(&struct {
-			ID   primitive.ObjectID   `json:"_id" bson:"_id"`
-			Type string               `json:"type" bson:"type"`
-			Data *models.ProjectInfo  `json:"data" bson:"data"`
+			ID   primitive.ObjectID  `json:"_id" bson:"_id"`
+			Type string              `json:"type" bson:"type"`
+			Data *models.ProjectInfo `json:"data" bson:"data"`
 		}{
 			ID:   layoutData.ID,
 			Type: layoutData.Type,
@@ -213,4 +213,3 @@ func handleError(c *gin.Context, err error, layoutType string) {
 		c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": "Error retrieving " + layoutType})
 	}
 }
-

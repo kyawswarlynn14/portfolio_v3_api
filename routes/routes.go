@@ -2,9 +2,19 @@ package routes
 
 import (
 	"portfolio/controllers"
+	"portfolio/middleware"
 
 	"github.com/gin-gonic/gin"
 )
+
+func VisitorRoutes(publicRoutes, authenticatedRoutes *gin.RouterGroup) {
+	publicRoutes.Use(middleware.VisitorDataMiddleware())
+
+	publicRoutes.POST("/visitor-log/create", controllers.CreateVisitorLog())
+	authenticatedRoutes.GET("/visitor-log/get-all", controllers.GetAllVisitorLogs())
+	authenticatedRoutes.GET("/visitor-log/get-one/:id", controllers.GetVisitorLogByID())
+	authenticatedRoutes.DELETE("/visitor-log/delete/:id", controllers.DeleteVisitorLog())
+}
 
 func AuthRoutes(publicRoutes, authenticatedRoutes *gin.RouterGroup) {
 	publicRoutes.POST("/login", controllers.Login())

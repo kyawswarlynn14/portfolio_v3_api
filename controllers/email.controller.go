@@ -19,7 +19,7 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-var EmailCollection *mongo.Collection = database.EmailData(database.Client, "Emails")
+var EmailCollection *mongo.Collection = database.PortfolioData(database.Client, "Emails")
 
 func SendEmail(subject string, body string) error {
 	SMIP_HOST := os.Getenv("SMIP_HOST")

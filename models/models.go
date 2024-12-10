@@ -21,6 +21,18 @@ func (et ExpenseType) IsValid() error {
 	return nil
 }
 
+type VisitorLog struct {
+	ID        primitive.ObjectID `json:"_id" bson:"_id"`
+	Device    string             `json:"device" bson:"device"`
+	Country   string             `json:"country" bson:"country"`
+	IP        string             `json:"ip" bson:"ip"`
+	Browser   string             `json:"browser" bson:"browser"`
+	OS        string             `json:"os" bson:"os"`
+	Timestamp time.Time          `json:"timestamp" bson:"timestamp"`
+	T1        string             `json:"t1" bson:"t1"`
+	T2        string             `json:"t2" bson:"t2"`
+}
+
 type LoginDetails struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
@@ -35,6 +47,7 @@ type AboutMe struct {
 	Facebook    string `json:"facebook" bson:"facebook"`
 	Telegram    string `json:"telegram" bson:"telegram"`
 	Image       string `json:"image" bson:"image"`
+	View_Count  int    `json:"view_count" bson:"view_count"`
 	T1          string `json:"t1" bson:"t1"`
 	T2          string `json:"t2" bson:"t2"`
 }
