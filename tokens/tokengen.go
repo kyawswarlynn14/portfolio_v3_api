@@ -22,7 +22,7 @@ func TokenGenerator(email string, userId string, role int) (signedtoken string, 
 		User_ID: userId,
 		Role:    role,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
+			ExpiresAt: time.Now().Local().Add(time.Hour * 24 * 30).Unix(),
 		},
 	}
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
