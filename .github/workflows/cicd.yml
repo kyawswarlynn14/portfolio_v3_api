@@ -26,16 +26,16 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build docker image
-        run: docker build -t integrationninjas/go-portfolio .
+        run: docker build -t kyawswarlynn/go-portfolio .
       - name: Push image to docker hub
-        run: docker push integrationninjas/go-portfolio:latest
+        run: docker push kyawswarlynn/go-portfolio:latest
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull docker image
-        run: docker pull integrationninjas/go-portfolio:latest
+        run: docker pull kyawswarlynn/go-portfolio:latest
       - name: Delete old container
         run: docker rm -f go-portfolio-container  
       - name: Run docker container          
-        run: docker run -d -p 4040:4040 --name go-portfolio-container integrationninjas/go-portfolio
+        run: docker run -d -p 4040:4040 --name go-portfolio-container kyawswarlynn/go-portfolio
